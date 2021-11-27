@@ -22,6 +22,7 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             extractRetreiveTopic = logic.extractRetreiveTopic(payload)
             readyForBookingDate = logic.extractDateForBooking(payload)
             time = logic.hourMinute(payload)
+            console.log(time)
 
             takenCoordinatesRed = [
                 [22.942625, 33.685255]
