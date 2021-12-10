@@ -1,4 +1,4 @@
-var subscriber = require('./src/subscriber.js');
+var subscriber = require('../extractData/src/subscriber.js');
 var publisher = require('./src/publisher.js');
 var logic = require('./src/logic.js');
 var indexChecker = new Array();
@@ -17,7 +17,7 @@ publisher.start(); //starts the publisher.js module
 
 subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
     try {
-        if (payload.length < 50) {
+        if (payload.length < 50 && payload.length > 20) { // i added and more than 20 to filter out anything that is not date
 
             extractRetreiveTopic = logic.extractRetreiveTopic(payload)
             readyForBookingDate = logic.extractDateForBooking(payload)
@@ -45,7 +45,7 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                 sendThis + "]")
 
             publisher.publish(newJSON)
-        } else {
+        } else if (payload.length > 50) {
             var dentistData = logic.extractDentistData(payload, readyForBookingDate) // booking payload load length is about 70
 
             var takenDate = logic.storeChosenOnes(dentistData)
@@ -98,6 +98,11 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
 
             }
 
+        } else {
+            var bytesString = String.fromCharCode(...payload)
+
+            console.log(bytesString)
+            publisher.publish(payload)
         }
     } catch (error) {
         console.log(error.message)
