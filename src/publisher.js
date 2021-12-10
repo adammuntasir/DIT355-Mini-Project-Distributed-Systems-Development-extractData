@@ -2,7 +2,7 @@ var mqtt = require("mqtt");
 var options = { qos: 1, keepalive: 0, reconnectPeriod: 5000 };
 var access = require("../../global_values");
 ip = access.ip_address;
-port = access.tcp_port;
+port = access.port;
 options = access.options;
 var client = mqtt.connect("tcp://" + ip + ":" + port, options);
 
