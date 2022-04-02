@@ -11,7 +11,7 @@ var readyForBookingDate
 var arrayOfMaps = new Array()
 var instantRed
 
-subscriber.start(); //starts the subscriber.js module
+subscriber.start(); //starts the subscriber.js module .
 publisher.start(); //starts the publisher.js module
 
 
